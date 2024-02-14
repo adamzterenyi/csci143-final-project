@@ -16,7 +16,7 @@ To get this webapp running, remember to run from the root.
 
 1. Build the image and run the containers in a development environment in order to test it:
 ```
-$ docker-compose up - --build
+$ docker-compose up -d --build
 ```
 
 2. Test it out at [http://localhost:40651](http://localhost:40651).
