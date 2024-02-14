@@ -28,8 +28,14 @@ $ docker-compose up -d --build
 ```
 $ curl http://localhost:40651
 ```
+* This should return
+```
+{
+    "hello": "world"
+}
+```
 
-2. Test it out at [http://localhost:40651](http://localhost:40651).
+2. If the check worked, test by visiting [http://localhost:40651/upload](http://localhost:40651/upload).
 
 3. Once tested, bring down the containers and volumes with
 ```
@@ -50,7 +56,7 @@ $ curl http://localhost:40651
 $ docker-compose -f docker-compose.prod.yml exec web python manage.py create_db
 ```
 
-6. Visit [http://localhost:40651](http://localhost:40651) and attempt the upload process again.
+6. Visit [http://localhost:40651/upload](http://localhost:40651/upload) and attempt the upload process again.
 
 7. Visit [http://localhost:40651/media/MEDIA_FILE_NAME](http://localhost:40651/media/MEDIA_FILE_NAME) to see the image or gif you just uploaded.
  
