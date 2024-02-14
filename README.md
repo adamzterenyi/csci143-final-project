@@ -24,6 +24,10 @@ To get this webapp running, remember to run from the root.
 ```
 $ docker-compose up -d --build
 ```
+* Check if your container is running and working with
+```
+$ curl http://localhost:40651
+```
 
 2. Test it out at [http://localhost:40651](http://localhost:40651).
 
@@ -36,6 +40,10 @@ $ docker-compose down -v
 ```
 $ docker-compose -f docker-compose.prod.yml up -d --build
 ```
+* Check if your container is running and working with
+```
+$ curl http://localhost:40651
+```
 
 5. Create the table using
 ```
@@ -44,7 +52,9 @@ $ docker-compose -f docker-compose.prod.yml exec web python manage.py create_db
 
 6. Visit [http://localhost:40651](http://localhost:40651) and attempt the upload process again.
 
-7. Bring down the process with
+7. Visit [http://localhost:40651/media/MEDIA_FILE_NAME](http://localhost:40651/media/MEDIA_FILE_NAME) to see the image or gif you just uploaded.
+ 
+8. Once done, bring down the process with
 ```
 $ docker-compose -f docker-compose.prod.yml down -v
-```
+``` 
