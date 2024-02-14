@@ -10,11 +10,13 @@ This is what the file uploading process looks like when using the webapp:
 
 ![GIF](CSCI143-flaskgif.gif)
 
+## Instructions
+
 ### Database credentials
 
 Ensure you have created your own `.env.prod` and `.env.prod.db` files with appropriate database credentials. You can find more information on how to do this in the TestDriven.io tutorial linked in the description. 
 
-## Instructions
+### Running the programs and getting images and containers up
 
 To get this webapp running, remember to run from the root.
 
