@@ -5,12 +5,12 @@ services:
     build:
       context: ./services/web
       dockerfile: Dockerfile.prod
-    command: gunicorn --bind 0.0.0.0:40651 manage:app
+    command: gunicorn --bind 0.0.0.0:1362 manage:app
     volumes:
       - static_volume:/home/app/web/project/static
       - media_volume:/home/app/web/project/media
     expose:
-      - 40651
+      - 1362
     env_file:
       - ./.env.prod
     depends_on:
@@ -27,7 +27,7 @@ services:
       - static_volume:/home/app/web/project/static
       - media_volume:/home/app/web/project/media
     ports:
-      - 40651:80
+      - 1362:80
     depends_on:
       - web
 
