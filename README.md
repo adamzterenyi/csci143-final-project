@@ -26,7 +26,7 @@ $ docker-compose up -d --build
 ```
 * Check if your container is running and working with
 ```
-$ curl http://localhost:40651
+$ curl http://localhost:1362
 ```
 * This should return
 ```
