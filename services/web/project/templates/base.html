@@ -1,0 +1,22 @@
+<html class="entirepage">
+    <head>
+        <link rel="stylesheet" href="static/style.css">
+        <title>CS40 Twitter Clone</title>
+    </head>
+    <body>
+        <h1 id="header">CS40 Twitter Clone</h1>
+        <ol class="center">
+            <li class="menu-items"><a href='/'>Home</a></li>
+            {% if logged_in %}
+            <li class="menu-items"><a href='/create_message'>Create message</a></li>
+            <li class="menu-items"><a href='/logout'>Logout</a></li>
+            {% else %}
+            <li class="menu-items"><a href='/login'>Login</a></li>
+            <li class="menu-items"><a href='/create_user'>Create user</a></li>
+            {% endif %}
+        </ol>
+
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

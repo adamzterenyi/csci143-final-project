@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="main">
+<h2 class="headers">Create message</h2>
+{% if message_posted %}
+<p>You have successfully posted your message! Head to home to check it out.</p>
+{% endif %}
+
+<form action='/create_message' method="POST" class="loginform">
+    <table>
+        <tr><td>message</td><td><input class="messagebox" type=textbox name=create_message></td></td><td><input type=submit value='Post'></td></tr>
+    </table>
+</form>
+</div>
+{% endblock %}
