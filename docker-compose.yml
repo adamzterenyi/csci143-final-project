@@ -7,7 +7,7 @@ services:
     volumes:
       - ./services/web/:/usr/src/app/
     ports:
-      - 1362:5000
+      - 1363:1363
     env_file:
       - ./.env.dev
     depends_on:
@@ -22,7 +22,7 @@ services:
       - POSTGRES_PASSWORD=pass
       - PGUSER=postgres
     ports:
-      - 1363:5432
+      - 1362:5432
 
 volumes:
   postgres:

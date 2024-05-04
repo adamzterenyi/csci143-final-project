@@ -15,7 +15,7 @@ from flask import (
 
 app = Flask(__name__)
 
-engine = sqlalchemy.create_engine('postgresql://postgrs:1362', connect_args={
+engine = sqlalchemy.create_engine('postgresql://postgres:1362', connect_args={
     'application_name': '__init__py'})
 
 connection = engine.connect()
