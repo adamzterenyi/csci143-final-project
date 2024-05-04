@@ -20,10 +20,8 @@ services:
     volumes:
       - ./:/tmp/db
       - postgres_prod:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=pass
-      - PGUSER=postgres
+    env_file:
+      - .env.prod.db
     ports:
       - 1362:5432
   nginx:

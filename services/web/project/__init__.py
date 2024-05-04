@@ -15,9 +15,8 @@ from flask import (
 
 app = Flask(__name__)
 
-engine = sqlalchemy.create_engine('postgresql://postgres:1362', connect_args={
-    'application_name': '__init__py'})
-
+# engine = sqlalchemy.create_engine('postgresql://postgres:5432', connect_args={'application_name': '__init__py'})
+engine = sqlalchemy.create_engine(os.getenv('DATABASE_URL'), connect_args={'application_name': '__init__py'})
 connection = engine.connect()
 
 
@@ -63,7 +62,7 @@ def get_messages(a):
         message,
         created_at,
         id
-        FROM messages ORDER BY created_at DESC LIMIT 40 OFFEST :offset;""")
+        FROM messages ORDER BY created_at DESC LIMIT 40 OFFSET :offset;""")
     res = connection.execute(sql, {'offset': a})
     for row_messages in res.fetchall():
         sql = sqlalchemy.sql.text("""
