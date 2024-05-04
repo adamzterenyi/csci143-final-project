@@ -100,7 +100,7 @@ def query_messages(query, a):
         FROM messages JOIN users ON (messages.sender_id = users.id)
         WHERE to_tsvector('english', message) @@ to_tsquery(:query)
         ORDER BY to_tsvectory(message) <=> to_tsquery(:query),
-        created_at DESC LIMIT 20 OFFSET :offset;""")
+        created_at DESC LIMIT 40 OFFSET :offset;""")
     print('inside query_messages')
 
     res = connection.execute(sql, {
@@ -249,21 +249,21 @@ def create_user():
 
     username_new = request.form.get('username_new')
     password_new = request.form.get('password_new')
-    password_new2 = request.form.get('password_new2')
-    age_new = request.form.get('new_age')
+    password_retyped = request.form.get('password_retyped')
+    age_new = request.form.get('age_new', '')
 
     if username_new is None:
         return render_template('create_user.html')
     elif not username_new or not password_new:
-        return render_template('create_user.html', one_blank=True)
+        return render_template('create_user.html', no_username=True)
     elif not age_new.isnumeric():
         return render_template('create_user.html', invalid_age=True)
     else:
-        if password_new != password_new2:
+        if password_new != password_retyped:
             return render_template('create_user.html', password_mismatch=True)
         else:
             try:
-                sql = sqlalchemy.sql.test('''INSERT into users (username, password, age) values(:username, :password, :age);''')
+                sql = sqlalchemy.sql.text('''INSERT into users (username, password, age) values(:username, :password, :age);''')
 
                 res = connection.execute(sql, {
                     'username': username_new,
@@ -274,7 +274,7 @@ def create_user():
 
                 return make_cookie(username_new, password_new)
             except sqlalchemy.exc.IntegrityError:
-                return render_template('create_user.html', already_exists=True)
+                return render_template('create_user.html', existing_user=True)
 
 
 @app.route('/search', methods=['GET', 'POST'])
