@@ -62,8 +62,8 @@ def get_messages(a):
         message,
         created_at,
         id
-        FROM messages ORDER BY created_at DESC LIMIT 40 OFFSET :offset;""")
-    res = connection.execute(sql, {'offset': a})
+        FROM messages ORDER BY created_at DESC LIMIT 20 OFFSET :offset;""")
+    res = connection.execute(sql, {'offset': (a - 1) * 20})
     for row_messages in res.fetchall():
         sql = sqlalchemy.sql.text("""
                 SELECT id,
@@ -90,7 +90,7 @@ def query_messages(query, a):
         SELECT sender_id,
         ts_headline(
             message, to_tsquery(:query),
-            'StartSel = "<span class = query><b>",
+            'StartSel =l"<span class = query><b>",
             StopSel = "</b></span>"')
         AS highlighted_message,
         created_at,
@@ -100,11 +100,11 @@ def query_messages(query, a):
         FROM messages JOIN users ON (messages.sender_id = users.id)
         WHERE to_tsvector('english', message) @@ to_tsquery(:query)
         ORDER BY to_tsvectory(message) <=> to_tsquery(:query),
-        created_at DESC LIMIT 40 OFFSET :offset;""")
+        created_at DESC LIMIT 20 OFFSET :offset;""")
     print('inside query_messages')
 
     res = connection.execute(sql, {
-        'offset': 40 * (a - 1),
+        'offset': (a - 1) * 20,
         'query': ' & '.join(query.split())
     })
 
@@ -225,11 +225,10 @@ def create_message():
         sql = sqlalchemy.sql.text("""
         INSERT INTO messages (sender_id,message,created_at) VALUES (:sender_id, :message, :created_at);
         """)
-        res = connection.execute(sql, {
+        connection.execute(sql, {
             'sender_id': sender_id,
             'message': message,
             'created_at': created_at})
-        print(res)
 
         return render_template('create_message.html', logged_in=good_credentials, message_posted=True)
 
@@ -287,11 +286,6 @@ def search():
     username = request.cookies.get('username')
     password = request.cookies.get('password')
     good_credentials = are_credentials_good(username, password)
-    if good_credentials:
-        logged_in = True
-    else:
-        logged_in = False
-    print('logged-in=', logged_in)
 
     page_number = int(request.args.get('page', 1))
 
