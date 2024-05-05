@@ -24,4 +24,5 @@ jobs:
           pip install psycopg2
           pip install faker
           pip install sqlalchemy
+          pip install os
           sh ./load_data.sh 100
