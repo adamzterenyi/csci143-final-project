@@ -2,7 +2,6 @@ import sys
 import psycopg2
 from psycopg2.extras import execute_batch
 from faker import Faker
-from dotenv import load_dotenv
 import os
 
 fake = Faker()
