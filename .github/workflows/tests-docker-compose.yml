@@ -38,6 +38,9 @@ jobs:
     - name: Install additional dependencies
       run: |
         pip install faker sqlalchemy
+    - name: Initialize the database schema
+      run: |
+        cat services/postgres/schema.sql | docker exec -i $(docker-compose ps -q postgres) psql -U postgres -d mydatabase
     - name: Load data into the database
       env:
         DATABASE_URL: postgresql://postgres:pass@localhost:5432/mydatabase
