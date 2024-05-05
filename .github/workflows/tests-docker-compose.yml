@@ -8,41 +8,19 @@ on:
 
 jobs:
   docker:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: pass
-          POSTGRES_DB: mydatabase
-        # GitHub Actions does not allow changing the host port; only the container port is specified.
-        ports:
-          - 5432:5432
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup dependencies
-      run: |
-        pip3 install -r services/web/requirements.txt
-    - name: Initialize and update git submodules
-      run: |
-        git submodule init
-        git submodule update
-    - name: Start up the application using Docker Compose
-      run: |
-        docker-compose up -d --build
-        docker ps -a
-    - name: Wait for the database to be ready
-      run: |
-        sleep 20
-    - name: Install additional dependencies
-      run: |
-        pip install faker sqlalchemy
-    - name: Initialize the database schema
-      run: |
-        cat services/postgres/schema.sql | docker exec -i $(docker-compose ps -q postgres) psql -U postgres -d mydatabase
-    - name: Load data into the database
-      env:
-        DATABASE_URL: postgresql://postgres:pass@localhost:5432/mydatabase
-      run: |
-        sh ./load_data.sh --db "${DATABASE_URL}" --user_rows 10
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+      - name: setup depedencies
+        run: |
+          pip3 install -r services/web/requirements.txt
+      - name: docker
+        run: |
+          git submodule init
+          git submodule update
+          docker-compose up -d --build
+          docker ps -a
+          sleep 20
+          pip install faker
+          pip install sqlalchemy
+          sh ./load_data.sh

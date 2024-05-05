@@ -5,4 +5,4 @@ if [ "$#" -lt 1 ]; then
   exit 1
 fi
 
-python3 load_data.py "$@"
+python3 load_data.py --db = "postgresql://postgres:pass@localhost:1362" --user_rows = 100
