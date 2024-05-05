@@ -23,4 +23,5 @@ jobs:
           sleep 20
           pip install faker
           pip install sqlalchemy
+          pip install logging
           sh ./load_data.sh

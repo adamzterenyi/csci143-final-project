@@ -33,11 +33,12 @@ def insert_users(connection, n_rows):
         age = fake.random_int(min=18, max=99)
         query = text("INSERT INTO users (username, password, age) VALUES (:username, :password, :age) RETURNING id")
         try:
-            result = connection.execute(query, username=username, password=password, age=age)
+            result = connection.execute(query, {'username': username, 'password': password, 'age': age})
             inserted_ids.append(result.fetchone()[0])
             logger.info("User inserted successfully.")
         except SQLAlchemyError as e:
             logger.error(f"An error occurred while inserting users: {e}")
+            raise
     return inserted_ids
 
 def insert_urls(connection, n_rows):
@@ -46,11 +47,12 @@ def insert_urls(connection, n_rows):
         url = fake.url()
         query = text("INSERT INTO urls (url) VALUES (:url) ON CONFLICT (url) DO UPDATE SET url=EXCLUDED.url RETURNING id_urls")
         try:
-            result = connection.execute(query, url=url)
+            result = connection.execute(query, {'url': url})
             inserted_ids.append(result.fetchone()[0])
             logger.info("URL inserted successfully.")
         except SQLAlchemyError as e:
             logger.error(f"An error occurred while inserting URLs: {e}")
+            raise
     return inserted_ids
 
 def insert_messages(connection, n_rows, user_ids, url_ids):
@@ -60,10 +62,11 @@ def insert_messages(connection, n_rows, user_ids, url_ids):
         message = fake.sentence()
         query = text("INSERT INTO messages (sender_id, message, id_urls, created_at) VALUES (:sender_id, :message, :id_urls, :created_at)")
         try:
-            connection.execute(query, sender_id=sender_id, message=message, id_urls=url_id, created_at=fake.date_time_this_decade())
+            connection.execute(query, {'sender_id': sender_id, 'message': message, 'id_urls': url_id, 'created_at': fake.date_time_this_decade()})
             logger.info("Message inserted successfully.")
         except SQLAlchemyError as e:
             logger.error(f"An error occurred while inserting messages: {e}")
+            raise
 
 def main():
     parser = argparse.ArgumentParser()
@@ -73,10 +76,15 @@ def main():
 
     engine = create_engine(args.db)
     with engine.connect() as connection:
-        user_ids = insert_users(connection, args.user_rows)
-        url_ids = insert_urls(connection, 50)  # Assume you want to insert 50 URLs
-        insert_messages(connection, args.user_rows, user_ids, url_ids)
-        logger.info(f"Inserted {args.user_rows} users, 50 URLs, and approximately {args.user_rows * 10} messages.")
+        try:
+            user_ids = insert_users(connection, args.user_rows)
+            url_ids = insert_urls(connection, args.user_rows)  # Assume you want to insert 50 URLs
+            insert_messages(connection, args.user_rows, user_ids, url_ids)
+            connection.commit()  # Commit the transaction after successful insertions
+            logger.info(f"Inserted {args.user_rows} users, {args.user_rows} URLs, and approximately {args.user_rows * 10} messages.")
+        except SQLAlchemyError:
+            connection.rollback()  # Rollback in case of error
+            logger.error("Transaction rolled back due to an error.")
 
 if __name__ == "__main__":
     main()
