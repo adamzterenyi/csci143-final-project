@@ -23,4 +23,4 @@ jobs:
           sleep 20
           pip install faker
           pip install sqlalchemy
-          sh ./load_data.sh --db "postgresql://postgres:pass@localhost:1362" --user_rows 10
+          sh ./load_data.sh --db "postgresql://postgres:pass@localhost:5432" --user_rows 10
