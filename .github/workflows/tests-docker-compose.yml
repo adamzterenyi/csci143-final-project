@@ -21,7 +21,6 @@ jobs:
           docker-compose up -d --build
           docker ps -a
           sleep 20
-          pip install psycopg2
           pip install faker
           pip install sqlalchemy
           sh ./load_data.sh 100

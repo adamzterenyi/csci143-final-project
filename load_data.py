@@ -1,49 +1,53 @@
 import sys
-import psycopg2
-from psycopg2.extras import execute_batch
+from sqlalchemy import create_engine, text
 from faker import Faker
 import os
 
 fake = Faker()
 
-def connect_db():
-    try:
-        return psycopg2.connect(
-            dbname=os.getenv('POSTGRES_DB'),
-            user=os.getenv('POSTGRES_USER'),
-            password=os.getenv('POSTGRES_PASSWORD'),
-            host=os.getenv('SQL_HOST'),
-            port=os.getenv('SQL_PORT'))
-    except psycopg2.Error as e:
-        print(f"Error connecting to the database: {e}")
-        sys.exit(1)
+def get_engine():
+    user = os.getenv('POSTGRES_USER', 'postgres')
+    password = os.getenv('POSTGRES_PASSWORD', 'pass')
+    db = os.getenv('POSTGRES_DB', 'mydatabase')
+    host = os.getenv('SQL_HOST', 'localhost')
+    port = os.getenv('SQL_PORT', '5432')
+    return create_engine(f"postgresql://{user}:{password}@{host}:{port}/{db}", echo=True, connect_args={
+        'application_name': 'load_data.py',
+    })
 
-def insert_users(conn, n_rows):
-    with conn.cursor() as cur:
-        data = [(fake.unique.user_name(), fake.password(length=12), fake.random_int(min=18, max=99)) for _ in range(n_rows)]
-        query = "INSERT INTO users (username, password, age) VALUES (:u, :p, :a);"
-        execute_batch(cur, query, data)
-    conn.commit()
+def insert_users(engine, n_rows):
+    with engine.connect() as connection:
+        for _ in range(n_rows):
+            query = text("INSERT INTO users (username, password, age) VALUES (:username, :password, :age) RETURNING id")
+            result = connection.execute(query, username=fake.unique.user_name(), password=fake.password(length=12), age=fake.random_int(min=18, max=99))
+            user_id = result.fetchone()[0]
+            print(f"Inserted user with ID: {user_id}")
 
-def insert_urls(conn, n_rows):
-    with conn.cursor() as cur:
-        data = [(fake.unique.url(),) for _ in range(n_rows)]
-        query = "INSERT INTO urls (url) VALUES (:u);"
-        execute_batch(cur, query, data)
-    conn.commit()
+def insert_urls(engine, n_rows):
+    with engine.connect() as connection:
+        for _ in range(n_rows):
+            query = text("INSERT INTO urls (url) VALUES (:url) RETURNING id")
+            result = connection.execute(query, url=fake.unique.url())
+            url_id = result.fetchone()[0]
+            print(f"Inserted URL with ID: {url_id}")
 
-def insert_messages(conn, n_rows, users_ids, urls_ids):
-    with conn.cursor() as cur:
-        data = [(fake.random_element(elements=users_ids), fake.sentence(), fake.random_element(elements=urls_ids + [None]), fake.date_time_this_decade()) for _ in range(n_rows)]
-        query = "INSERT INTO messages (sender_id, message, id_urls, created_at) VALUES (:s, :m, :iu, :c);"
-        execute_batch(cur, query, data)
-    conn.commit()
+def get_users_ids(engine):
+    with engine.connect() as connection:
+        query = text("SELECT id FROM users")
+        result = connection.execute(query)
+        return [row[0] for row in result]
 
-def get_ids(conn, table_name, column_name):
-    with conn.cursor() as cur:
-        query = f"SELECT {column_name} FROM {table_name};"
-        cur.execute(query)
-        return [row[0] for row in cur.fetchall()]
+def get_urls_ids(engine):
+    with engine.connect() as connection:
+        query = text("SELECT id FROM urls")
+        result = connection.execute(query)
+        return [row[0] for row in result]
+
+def insert_messages(engine, (10 * n_rows), users_ids, urls_ids):
+    with engine.connect() as connection:
+        for _ in range(n_rows):
+            query = text("INSERT INTO messages (sender_id, message, url_id, created_at) VALUES (:sender_id, :message, :url_id, :created_at)")
+            connection.execute(query, sender_id=fake.random_element(elements=users_ids), message=fake.sentence(), url_id=fake.random_element(elements=urls_ids + [None]), created_at=fake.date_time_this_decade())
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -51,22 +55,15 @@ if __name__ == "__main__":
         sys.exit(1)
 
     n_rows = int(sys.argv[1])
-    conn = connect_db()
+    engine = get_engine()
 
-    # Insert into users table
-    insert_users(conn, max(n_rows, 1000))  # Ensure at least some users
+    # Insert data
+    insert_users(engine, n_rows)  # Insert n_rows users
+    insert_urls(engine, n_rows)  # Insert n_rows URLs
 
-    # Get users ids
-    users_ids = get_ids(conn, 'users', 'id')
+    # Fetch IDs
+    users_ids = get_users_ids(engine)
+    urls_ids = get_urls_ids(engine)
 
-    # Insert into urls table
-    insert_urls(conn, max(int(n_rows * 0.1), 100))  # URLs are less than messages
-
-    # Get urls ids
-    urls_ids = get_ids(conn, 'urls', 'id_urls')
-
-    # Insert into messages table
-    insert_messages(conn, max((10 * n_rows), 10000), users_ids, urls_ids)  # Target for high volume
-
-    conn.close()
-    print("Data loading completed.")
+    # Insert messages
+    insert_messages(engine, n_rows, users_ids, urls_ids)
