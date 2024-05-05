@@ -10,6 +10,8 @@ services:
       - 1363:1363
     env_file:
       - ./.env.dev
+    environment:
+      - DATABASE_URL=postgresql://postgres:pass@postgres:5432/devdb
     depends_on:
       - postgres
   postgres:
@@ -20,7 +22,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=pass
-      - PGUSER=postgres
+      - POSTGRES_DB=devdb
     ports:
       - 1362:5432
 
