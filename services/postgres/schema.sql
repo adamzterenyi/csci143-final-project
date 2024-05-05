@@ -1,4 +1,5 @@
 SET max_parallel_maintenance_workers TO 80;
+SET max_maintenance_workers TO 80;
 SET maintenance_work_mem TO '16 GB';
 
 CREATE TABLE users (
@@ -8,11 +9,17 @@ CREATE TABLE users (
     age INTEGER
 );
 
-create table messages (
-    id BIGSERIAL primary key,
+CREATE TABLE messages (
+    id BIGSERIAL PRIMARY KEY,
     sender_id integer NOT NULL REFERENCES users(id),
     message text NOT NULL,
-    created_at timestamp not null default current_timestamp,
+    id_urls INTEGER REFERENCES urls(id_urls),
+    created_at timestamp NOT NULL default current_timestamp
+);
+
+CREATE TABLE urls (
+    id_urls BIGSERIAL PRIMARY KEY,
+    url TEXT UNIQUE
 );
 
 CREATE TABLE fts_word (
@@ -20,7 +27,8 @@ CREATE TABLE fts_word (
 );
 
 CREATE EXTENSION IF NOT EXISTS RUM;
-CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+--CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
 CREATE INDEX get_messages ON messages(created_at, id, sender_id, message);
 CREATE INDEX query_messages ON messages USING RUM(to_tsvector('english', message));
