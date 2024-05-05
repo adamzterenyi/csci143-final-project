@@ -62,8 +62,8 @@ def get_messages(a):
         message,
         created_at,
         id
-        FROM messages ORDER BY created_at DESC LIMIT 20 OFFSET :offset;""")
-    res = connection.execute(sql, {'offset': (a - 1) * 20})
+        FROM messages ORDER BY created_at DESC LIMIT 20 OFFSET :offset * 20;""")
+    res = connection.execute(sql, {'offset': (a - 1)})
     for row_messages in res.fetchall():
         sql = sqlalchemy.sql.text("""
                 SELECT id,
@@ -137,17 +137,17 @@ def root():
     print('good_credentials=', good_credentials)
 
     try:
-        page_number = int(request.cookies.get('page_number'))
+        page_number = int(request.args.get('page', 1))
     except TypeError:
         page_number = 1
 
     messages = get_messages(page_number)
 
-    # render_template does pre processing of the input html file;
-    # technically, the input to the render_template function is in a language called jinja2
-    # the output of render_template is html
-    # render the jinja2 template and pass the result to firefox
-    return render_template('root.html', messages=messages, logged_in=good_credentials, username=username, page_number=page_number)
+    # Increment for "Next" page, ensure it's not less than 1 for "Previous"
+    next_page = page_number + 1
+    prev_page = max(1, page_number - 1)  # Prevent going below page 1
+
+    return render_template('root.html', messages=messages, logged_in=good_credentials, username=username, page_number=page_number, next_page=next_page, prev_page=prev_page)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -287,7 +287,14 @@ def search():
     password = request.cookies.get('password')
     good_credentials = are_credentials_good(username, password)
 
-    page_number = int(request.args.get('page', 1))
+    try:
+        page_number = int(request.args.get('page', 1))
+    except TypeError:
+        page_number = 1
+
+    # Increment for "Next" page, ensure it's not less than 1 for "Previous"
+    next_page = page_number + 1
+    prev_page = max(1, page_number - 1)  # Prevent going below page 1
 
     if request.form.get('query'):
         query = request.form.get('query')
@@ -301,7 +308,7 @@ def search():
     else:
         messages = get_messages(page_number)
 
-    response = make_response(render_template('search.html', messages=messages, logged_in=good_credentials, username=username, page_number=page_number, query=query))
+    response = make_response(render_template('search.html', messages=messages, logged_in=good_credentials, username=username, page_number=page_number, next_page=next_page, prev_page=prev_page, query=query))
 
     if query:
         response.set_cookie('query', query)

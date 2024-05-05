@@ -89,3 +89,23 @@ body {
   margin-right: 20%;
   padding: 10px; 
 }
+
+.pagination-button {
+  padding: 10px 20px;
+  color: #333; /* Dark text color for better contrast */
+  background-color: rgb(162, 217, 238); /* Light blue background */
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 5px;
+  display: inline-block; /* To ensure proper spacing and alignment */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.pagination-button:hover {
+  background-color: #99cfe0; /* A slightly darker shade of blue for hover */
+}
+
+.query {
+    background-color: #FCF803;
+    color: black;
+}
