@@ -6,6 +6,7 @@ services:
     command: python manage.py run -h 0.0.0.0
     volumes:
       - ./services/web/:/usr/src/app/
+      - ./load_data.py:/usr/src/app/load_data.py
     ports:
       - 1363:1363
     env_file:
@@ -20,7 +21,8 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=pass
-      - POSTGRES_DB=devdb
+      - PGUSER=postgres
+       # POSTGRES_DB=devdb
     ports:
       - 1362:5432
 
