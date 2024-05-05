@@ -8,17 +8,11 @@ CREATE TABLE users (
     age INTEGER
 );
 
-CREATE TABLE urls (
-    id_urls BIGSERIAL PRIMARY KEY,
-    url TEXT UNIQUE
-);
-
 create table messages (
     id BIGSERIAL primary key,
-    sender_id integer not null REFERENCES users(id),
-    message text not null,
+    sender_id integer NOT NULL REFERENCES users(id),
+    message text NOT NULL,
     created_at timestamp not null default current_timestamp,
-    id_urls INTEGER REFERENCES urls(id_urls)
 );
 
 CREATE TABLE fts_word (
