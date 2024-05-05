@@ -19,6 +19,16 @@ app = Flask(__name__)
 engine = sqlalchemy.create_engine(os.getenv('DATABASE_URL'), connect_args={'application_name': '__init__py'})
 connection = engine.connect()
 
+# flask_env = os.getenv('FLASK_ENV', 'development')
+
+# if flask_env == 'production':
+#    database_url = os.getenv('DATABASE_URL', 'default_production_database_url')
+# else:
+#    database_url = os.getenv('DATABASE_URL', 'default_development_database_url')
+
+# engine = sqlalchemy.create_engine(database_url, connect_args={'applicat    ion_name': '__init__py'})
+# connection = engine.connect()
+
 
 def print_debug_info():
     # GET method
