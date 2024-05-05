@@ -29,7 +29,7 @@ def insert_users(connection, n_rows):
                 inserted_ids.append(result.fetchone()[0])
     except SQLAlchemyError as e:
         print(f"An error occurred while inserting users: {e}")
-        transaction.rollback()
+        pass
     return inserted_ids
 
 def insert_urls(connection, n_rows):
@@ -43,7 +43,7 @@ def insert_urls(connection, n_rows):
                 inserted_ids.append(result.fetchone()[0])
     except SQLAlchemyError as e:
         print(f"An error occurred while inserting URLs: {e}")
-        transaction.rollback()
+        pass
     return inserted_ids
 
 def insert_messages(connection, n_rows, user_ids, url_ids):
@@ -57,7 +57,7 @@ def insert_messages(connection, n_rows, user_ids, url_ids):
                 connection.execute(query, sender_id=sender_id, message=message, id_urls=url_id, created_at=fake.date_time_this_decade())
     except SQLAlchemyError as e:
         print(f"An error occurred while inserting messages: {e}")
-        transaction.rollback()
+        pass
 
 def main():
     with engine.connect() as connection:

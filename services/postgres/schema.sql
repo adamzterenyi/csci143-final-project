@@ -9,17 +9,17 @@ CREATE TABLE users (
     age INTEGER
 );
 
+CREATE TABLE urls (
+    id_urls BIGSERIAL PRIMARY KEY,
+    url TEXT UNIQUE
+);
+
 CREATE TABLE messages (
     id BIGSERIAL PRIMARY KEY,
     sender_id integer NOT NULL REFERENCES users(id),
     message text NOT NULL,
     id_urls INTEGER REFERENCES urls(id_urls),
     created_at timestamp NOT NULL default current_timestamp
-);
-
-CREATE TABLE urls (
-    id_urls BIGSERIAL PRIMARY KEY,
-    url TEXT UNIQUE
 );
 
 CREATE EXTENSION IF NOT EXISTS RUM;
