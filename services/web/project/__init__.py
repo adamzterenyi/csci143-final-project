@@ -109,7 +109,7 @@ def query_messages(query, a):
     messages = []
     for row_messages in res.fetchall():
         message = row_messages[1]
-        cleaned_message = bleach.clean(message, tags=['b', 'span'], attributes={'span': ['class']})
+        cleaned_message = bleach.clean(message, tags=['b', 'mark'])
         linked_message = bleach.linkify(cleaned_message)
         messages.append({
             'id': row_messages[3],
