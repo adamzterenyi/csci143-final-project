@@ -3,7 +3,7 @@
 {% block content %}
 
 <form action="/search" method="POST">
-    <input type="text" name="query" value={{query}}>
+    <input type="text" name="query" value={{query|e}}>
     <input type="submit" value="search">
 </form>
 
@@ -26,13 +26,13 @@
 
 <div>
     {% if prev_page < page_number %}
-        <a href="?query={{query}}&page={{ prev_page }}" class="menu-items">Previous</a>
+        <a href="?query={{query|e}}&page={{ prev_page }}" class="menu-items">Previous</a>
     {% endif %}
 
     Page {{ page_number }}
 
     {% if messages|length == 20 %}
-        <a href=?query={{query}}&page={{ next_page }}" class="menu-items">Next</a>
+        <a href="?query={{query|e}}&page={{ next_page }}" class="menu-items">Next</a>
     {% endif %}
 </div>
 {% endblock %}

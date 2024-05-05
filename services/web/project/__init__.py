@@ -90,7 +90,7 @@ def query_messages(query, a):
     SELECT sender_id,
     ts_headline(
         message, plainto_tsquery(:query),
-        'StartSel="<span class=search><b>", StopSel="</b></span>"')
+        'StartSel="<mark><b>", StopSel="</b></mark>"')
     AS highlighted_message,
     created_at,
     messages.id,
@@ -298,8 +298,6 @@ def search():
         query = request.form.get('query')
     else:
         query = request.args.get('query', '')
-
-    print('before query_messages')
 
     if query:
         messages = query_messages(query, page_number)
