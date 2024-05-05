@@ -1,5 +1,5 @@
 SET max_parallel_maintenance_workers TO 80;
-SET max_maintenance_workers TO 80;
+SET max_parallel_workers TO 80;
 SET maintenance_work_mem TO '16 GB';
 
 CREATE TABLE users (
