@@ -28,7 +28,7 @@ body {
     margin-left: 20px;
 }
 
-.menu-items a {
+.menu-items a { 
     color: #0277BD;
     text-decoration: none;
     padding: 6px 15px;
@@ -61,15 +61,55 @@ td, th {
 }
 
 @media (max-width: 600px) {
-    .header .logo, .menu-items a {
+    .header .logo, .menu-items a { 
         font-size: 18px;
-    }
+    }   
     form, table {
         width: 90%;
-    }
+    }   
 }
 
 mark { 
   background-color: yellow;
   color: black;
 }
+
+/* Style for login forms */
+.loginform {
+    width: 50%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+}
+
+.loginform table {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.loginform input[type="text"], .loginform input[type="password"], .loginform textarea {
+    width: 95%;
+    padding: 10px;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.loginform input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #0277BD;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.loginform input[type="submit"]:hover {
+    background-color: #01579B;
+}
+

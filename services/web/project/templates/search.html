@@ -3,36 +3,41 @@
 {% block content %}
 
 <form action="/search" method="POST">
-    <input type="text" name="query" value={{query|e}}>
-    <input type="submit" value="search">
+    <input type="text" name="query" value={{ query|e }}>
+    <input type="submit" value="Search">
 </form>
 
-<div class="centerstrip">
+<div>
     <h2>Search</h2>
     <p>Messages:</p>
-    <div class="centercontrast">
-    <table class="messages">
-        <tr><th>Sender (age)</th><th>Message</th><th>Created at</th></tr>
-        {% for message in messages %}
-        <tr>
-            <td class="td">{{message['username']}} ({{message['age']}})</td>
-            <td class="td">{{message['message']|safe}}</td>
-            <td class="td">{{message['created_at']}}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div>
+        <table>
+            <tr>
+                <th>Sender (age)</th>
+                <th>Message</th>
+                <th>Created at</th>
+            </tr>
+            {% for message in messages %}
+            <tr>
+                <td>{{ message['username'] }} ({{ message['age'] }})</td>
+                <td>{{ message['message'] | safe }}</td>
+                <td>{{ message['created_at'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 </div>
 
 <div>
     {% if prev_page < page_number %}
-        <a href="?query={{query|e}}&page={{ prev_page }}" class="menu-items">Previous</a>
+        <a href="?query={{ query|e }}&page={{ prev_page }}" class="menu-items">Previous</a>
     {% endif %}
 
     Page {{ page_number }}
 
     {% if messages|length == 20 %}
-        <a href="?query={{query|e}}&page={{ next_page }}" class="menu-items">Next</a>
+        <a href="?query={{ query|e }}&page={{ next_page }}" class="menu-items">Next</a>
     {% endif %}
 </div>
 {% endblock %}
+

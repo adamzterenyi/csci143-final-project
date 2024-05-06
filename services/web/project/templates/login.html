@@ -3,23 +3,28 @@
 {% block content %}
 
 <div class="main">
-<h2 class="headers">Login Webpage</h2>
+    <h2>Login Webpage</h2>
 
-{% if bad_credentials %}
-<p class='color:red;'>ERROR: Username or password incorrect</p>
-{% endif %}
+    {% if bad_credentials %}
+    <p style="color: red;">ERROR: Username or password incorrect</p>
+    {% endif %}
 
-<form action='/login' method="POST" class="loginform">
-    <table>
-        <tr><td>username</td><td><input type=text name=username></td></tr>
-        <tr><td>password</td><td><input type=password name=password></td></tr>
-        <tr>
-            <td></td>
-            <td>
-            <input type=submit value='Log in'>
-            </td>
-        </tr>
-    </table>
-</form>
+    <form action="/login" method="POST" class="loginform">
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" name="username"></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" name="password"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Log in"></td>
+            </tr>
+        </table>
+    </form>
 </div>
 {% endblock %}
+

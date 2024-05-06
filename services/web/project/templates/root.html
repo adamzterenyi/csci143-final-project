@@ -1,20 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="centerstrip">
+<div>
     <h2>Home</h2>
     <p>Messages:</p>
-    <div class="centercontrast">
-    <table class="messages">
-        <tr><th>Sender (age)</th><th>Message</th><th>Created at</th></tr>
-        {% for message in messages %}
-        <tr>
-            <td class="td">{{message['username']}} ({{message['age']}})</td>
-            <td class="td">{{message['message']|safe}}</td>
-            <td class="td">{{message['created_at']}}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div>
+        <table>
+            <tr>
+                <th>Sender (age)</th>
+                <th>Message</th>
+                <th>Created at</th>
+            </tr>
+            {% for message in messages %}
+            <tr>
+                <td>{{ message['username'] }} ({{ message['age'] }})</td>
+                <td>{{ message['message'] | safe }}</td>
+                <td>{{ message['created_at'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 </div>
 
@@ -30,3 +34,4 @@
     {% endif %}
 </div>
 {% endblock %}
+
