@@ -2,48 +2,37 @@
 
 {% block content %}
 <div class="main">
-    <h2>Create user</h2>
+<h2 class="headers">Create user</h2>
 
-    {% if invalid_age %}
-        <p style="color: red;">ERROR: You must type only integers for your age.</p>
-    {% endif %}
+{% if invalid_age %}
+<p>ERROR: You must type only integers for your age.</p>
+{% endif %}
 
-    {% if password_mismatch %}
-        <p style="color: red;">ERROR: Your passwords do not match, please try again.</p>
-    {% endif %}
+{% if password_mismatch %}
+<p class='color:red;'>ERROR: your passwords do not match, please try again.</p>
+{% endif %}
 
-    {% if existing_user %}
-        <p style="color: red;">You have already made an account or this username already exists, try again.</p>
-    {% endif %}
+{% if existing_user %}
+<p>You have already made an account or this username already exists, try again.</p>
+{% endif %}
 
-    {% if no_username %}
-        <p style="color: red;">ERROR: You have not typed a username or a password, try again.</p>
-    {% endif %}
+{% if no_username %}
+<p>ERROR: you have not typed a username or a password, try again.</p>
+{% endif %}
 
-    <form action="/create_user" method="POST" class="loginform">
-        <table>
-            <tr>
-                <td>Username:</td>
-                <td><input type="text" name="username_new"></td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td><input type="password" name="password_new"></td>
-            </tr>
-            <tr>
-                <td>Retype password:</td>
-                <td><input type="password" name="password_retyped"></td>
-            </tr>
-            <tr>
-                <td>Age:</td>
-                <td><input type="text" name="age_new"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Create account"></td>
-            </tr>
-        </table>
-    </form>
+<form action='/create_user' method="POST" class="loginform">
+    <table>
+        <tr><td>username</td><td><input type=text name=username_new></td></tr>
+        <tr><td>password</td><td><input type=password name=password_new></td></tr>
+        <tr><td>retype password</td><td><input type=password name=password_retyped></td></tr>
+        <tr><td>age</td><td><input type=text name=age_new></td></tr>
+        <tr>
+            <td></td>
+            <td>
+            <input type=submit value='Create account'>
+            </td>
+        </tr>
+    </table>
+</form>
 </div>
 {% endblock %}
-

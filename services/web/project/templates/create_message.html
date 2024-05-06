@@ -2,20 +2,15 @@
 
 {% block content %}
 <div class="main">
-    <h2>Create Message</h2>
-    {% if message_posted %}
-        <p>You have successfully posted your message! Head to home to check it out.</p>
-    {% endif %}
+<h2 class="headers">Create message</h2>
+{% if message_posted %}
+<p>You have successfully posted your message! Head to home to check it out.</p>
+{% endif %}
 
-    <form action="/create_message" method="POST" class="loginform">
-        <table>
-            <tr>
-                <td>Message:</td>
-                <td><textarea name="message" rows="4" cols="50" style="border-radius: 5px; border: 1px solid #ccc; padding: 8px;"></textarea></td>
-                <td><input type="submit" value="Post"></td>
-            </tr>
-        </table>
-    </form>
+<form action='/create_message' method="POST" class="loginform">
+    <table>
+        <tr><td>message</td><td><input class="messagebox" type=textbox name=message></td></td><td><input type=submit value='Post'></td></tr>
+    </table>
+</form>
 </div>
 {% endblock %}
-
