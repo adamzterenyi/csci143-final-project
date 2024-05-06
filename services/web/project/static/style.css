@@ -1,9 +1,80 @@
+/* Add this import statement at the top */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Reset some basic elements */
+body, h1, h2, h3, p, form, table {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif; /* Update the font-family here */
+}
+
+body {
+    background-color: #F0F8FF;
+    color: #333;
+    text-align: center;
+    align-items: center;
+}
+
+.header {
+    background-color: #E1F5FE;
+    color: #0277BD;
+    padding: 10px 0;
+    text-align: left;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header .logo {
+    margin-left: 20px;
+}
+
+.menu-items a {
+    color: #0277BD;
+    text-decoration: none;
+    padding: 6px 15px;
+    font-size: 20px;
+}
+
+.menu-items a:hover {
+    background-color: #B3E5FC;
+}
+
+form, table {
+    width: 60%;
+    margin: 20px auto;
+}
+
+input[type=text], input[type=password], input[type=submit] {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+@media (max-width: 600px) {
+    .header .logo, .menu-items a {
+        font-size: 18px;
+    }
+    form, table {
+        width: 90%;
+    }
+}
+
 mark { 
   background-color: yellow;
   color: black;
 }
 
-h1 {
+/* h1 {
   color: white;
   font-size: 60pt;
   padding: 10px;
