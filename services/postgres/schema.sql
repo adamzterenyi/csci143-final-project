@@ -21,10 +21,7 @@ CREATE TABLE messages (
     id_urls INTEGER REFERENCES urls(id_urls),
     created_at timestamp NOT NULL default current_timestamp
 );
+CREATE INDEX get_messages ON messages(created_at, id, sender_id, message);
 
 CREATE EXTENSION IF NOT EXISTS RUM;
-
---CREATE EXTENSION IF NOT EXISTS pg_trgm;
-
-CREATE INDEX get_messages ON messages(created_at, id, sender_id, message);
 CREATE INDEX query_messages ON messages USING RUM(to_tsvector('english', message));
