@@ -1,3 +1,4 @@
+[![](https://github.com/adamzterenyi/csci143-final-project/workflows/tests/badge.svg)](https://github.com/adamzterenyi/csci143-final-project/actions?query=workflow%3Atests)
 # Final Project
 
 You will create your own database-backed webpage from scratch using the Instagram architecture.
@@ -223,14 +224,8 @@ This will ensure that if you encounter difficulties, you will have time to ask m
     1. Only exception is no office hours Thursday (11:00am-12:30pm); but I will still be available during class hours from (9:35am - 10:50am).
     1. If there's a large demand, we will move across the hall to the math commons room (Adams 2nd floor, east side of building).
 ```
-$ docker-compose -f docker-compose.prod.yml up -d --build
+$ docker-compose -f docker-compose.prod.yml up --build
 ```
 ```
-$ curl http://localhost:40651
-```
-```
-$ docker-compose -f docker-compose.prod.yml exec web python manage.py create_db
-```
-```
-$ docker-compose -f docker-compose.prod.yml down -v
+$ docker-compose -f docker-compose.prod.yml down
 ``` 
