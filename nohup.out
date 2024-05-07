@@ -1,2 +1,96 @@
 Total execution time: 7929.20 seconds.
 Total messages inserted: 400000
+Total execution time: 2400.15 seconds.
+Total messages inserted: 100000
+Traceback (most recent call last):
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1891, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 1000, in do_executemany
+    cursor.executemany(statement, parameters)
+psycopg2.errors.AdminShutdown: terminating connection due to administrator command
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "load_data.py", line 80, in <module>
+    main()
+  File "load_data.py", line 72, in main
+    message_count = insert_messages(session, args.user_rows, args.user_rows)  # Assumes messages are based on user count
+  File "load_data.py", line 56, in insert_messages
+    messages_data
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 1717, in execute
+    result = conn._execute_20(statement, params or {}, execution_options)
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1710, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 335, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1587, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1954, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 2135, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1891, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 1000, in do_executemany
+    cursor.executemany(statement, parameters)
+sqlalchemy.exc.OperationalError: (psycopg2.errors.AdminShutdown) terminating connection due to administrator command
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+[SQL: INSERT INTO messages (sender_id, message, id_urls, created_at) VALUES (%(sender_id)s, %(message)s, %(id_urls)s, %(created_at)s)]
+[parameters: ({'sender_id': 136894, 'message': 'Present note responsibility street.', 'id_urls': 308540, 'created_at': datetime.datetime(2021, 11, 1, 11, 42, 57)}, {'sender_id': 746056, 'message': 'Yes take return American eat process wrong.', 'id_urls': 390787, 'created_at': datetime.datetime(2023, 2, 7, 8, 23, 28)}, {'sender_id': 561936, 'message': 'Hair responsibility especially over east try field story.', 'id_urls': 671132, 'created_at': datetime.datetime(2020, 9, 30, 22, 7, 17)}, {'sender_id': 1020264, 'message': 'Effort wife majority remember beat civil beat.', 'id_urls': 559908, 'created_at': datetime.datetime(2022, 5, 27, 8, 51, 19)}, {'sender_id': 869698, 'message': 'Pull I last onto.', 'id_urls': 1057146, 'created_at': datetime.datetime(2024, 1, 28, 4, 53, 27)}, {'sender_id': 161184, 'message': 'Meet practice old lot power measure.', 'id_urls': 174877, 'created_at': datetime.datetime(2020, 11, 19, 18, 7, 43)}, {'sender_id': 956082, 'message': 'Example evidence this agreement situation voice consumer degree.', 'id_urls': 1030803, 'created_at': datetime.datetime(2022, 6, 21, 9, 39, 5)}, {'sender_id': 794158, 'message': 'Tough beyond nearly just.', 'id_urls': 8336, 'created_at': datetime.datetime(2022, 12, 26, 4, 55, 19)}  ... displaying 10 of 500000 total bound parameter sets ...  {'sender_id': 97402, 'message': 'Speak Democrat popular pretty his small entire detail.', 'id_urls': 532910, 'created_at': datetime.datetime(2020, 10, 14, 20, 10, 29)}, {'sender_id': 754985, 'message': 'Relate car war agency dinner I lead.', 'id_urls': 596756, 'created_at': datetime.datetime(2021, 8, 5, 8, 53, 30)})]
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+Traceback (most recent call last):
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1891, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 1000, in do_executemany
+    cursor.executemany(statement, parameters)
+psycopg2.errors.AdminShutdown: terminating connection due to administrator command
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "load_data.py", line 80, in <module>
+    main()
+  File "load_data.py", line 72, in main
+    message_count = insert_messages(session, args.user_rows, args.user_rows)  # Assumes messages are based on user count
+  File "load_data.py", line 56, in insert_messages
+    messages_data
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 1717, in execute
+    result = conn._execute_20(statement, params or {}, execution_options)
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1710, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 335, in _execute_on_connection
+    self, multiparams, params, execution_options
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1587, in _execute_clauseelement
+    cache_hit=cache_hit,
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1954, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 2135, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1891, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/aterenyi25/.local/lib/python3.6/site-packages/sqlalchemy/dialects/postgresql/psycopg2.py", line 1000, in do_executemany
+    cursor.executemany(statement, parameters)
+sqlalchemy.exc.OperationalError: (psycopg2.errors.AdminShutdown) terminating connection due to administrator command
+server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+[SQL: INSERT INTO messages (sender_id, message, id_urls, created_at) VALUES (%(sender_id)s, %(message)s, %(id_urls)s, %(created_at)s)]
+[parameters: ({'sender_id': 497453, 'message': 'Question cost college generation.', 'id_urls': 275085, 'created_at': datetime.datetime(2020, 3, 7, 9, 56, 12)}, {'sender_id': 59162, 'message': 'Couple compare remember I wish.', 'id_urls': 195456, 'created_at': datetime.datetime(2022, 8, 30, 1, 37)}, {'sender_id': 559548, 'message': 'Body hard feel whatever leader across necessary.', 'id_urls': 760602, 'created_at': datetime.datetime(2023, 6, 6, 0, 45, 19)}, {'sender_id': 493412, 'message': 'Choose produce rock hot where close main.', 'id_urls': 433874, 'created_at': datetime.datetime(2020, 4, 16, 6, 13, 22)}, {'sender_id': 166467, 'message': 'Third author among quickly large her.', 'id_urls': 283870, 'created_at': datetime.datetime(2022, 6, 10, 19, 18, 37)}, {'sender_id': 335248, 'message': 'Beat kind by decide eye media about.', 'id_urls': 432161, 'created_at': datetime.datetime(2024, 2, 12, 16, 12, 39)}, {'sender_id': 123924, 'message': 'Range owner have often nature fund.', 'id_urls': 419880, 'created_at': datetime.datetime(2022, 9, 5, 22, 4, 49)}, {'sender_id': 638717, 'message': 'With industry follow sit talk population.', 'id_urls': 572429, 'created_at': datetime.datetime(2020, 6, 19, 6, 17, 48)}  ... displaying 10 of 4000000 total bound parameter sets ...  {'sender_id': 381660, 'message': 'Low measure according participant figure yard report.', 'id_urls': 479045, 'created_at': datetime.datetime(2022, 11, 11, 0, 45, 23)}, {'sender_id': 475531, 'message': 'Base institution prove color situation believe.', 'id_urls': 439550, 'created_at': datetime.datetime(2022, 10, 22, 20, 12, 55)})]
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
